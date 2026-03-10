@@ -1,33 +1,32 @@
 import ollama
 
 def call_agent(agent_name, system_prompt, user_task):
-    print(f"\n--- {agent_name} is working... ---")
+    print(f"\n--- {agent_name} is thinking... ---")
     response = ollama.chat(model='llama3.2:1b', messages=[
         {'role': 'system', 'content': system_prompt},
         {'role': 'user', 'content': user_task},
     ])
-    return response['message']['content']
+    content = response['message']['content']
+    print(f"--- {agent_name} completed task. ---")
+    return content
 
 def run_openclow_fast():
-    print("--- OpenCLOW Professional (Intel Mac Optimized) ---")
-    task = "Create a simple Python login script."
+    print("--- OpenCLOW V5 (Intel Mac Optimized) ---")
+    task = "Create a simple Python script for a Pomodoro Timer."
 
-    # Step 1: Manager
-    plan = call_agent("Manager", "Give a 1-line plan.", task)
+    # 1. Manager Plans
+    plan = call_agent("Manager", "Give a brief 2-step coding plan.", task)
     
-    # Step 2: Coder
-    code = call_agent("Coder", "Write short Python code.", f"Plan: {plan}")
+    # 2. Coder Writes
+    code = call_agent("Coder", "Write clean Python code for the plan.", f"Plan: {plan}")
     
-    # Step 3: Reviewer
-    check = call_agent("Reviewer", "Check for bugs in 1 sentence.", code)
+    # 3. Reviewer Checks
+    review = call_agent("Reviewer", "Check this code for errors in one sentence.", code)
 
-    print("\n--- RESULTS ---")
-    print(f"PLAN: {plan}")
-    print(f"CODE:\n{code}")
-    print(f"REVIEW: {check}")
-
-    with open("final_report.txt", "w") as f:
-        f.write(f"CODE:\n{code}\n\nREVIEW:\n{check}")
+    print("\n--- FINAL OUTPUT ---")
+    print(f"PLAN: {plan}\n")
+    print(f"CODE:\n{code}\n")
+    print(f"REVIEW: {review}")
 
 if __name__ == "__main__":
     run_openclow_fast()
