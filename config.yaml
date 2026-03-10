@@ -1,0 +1,5 @@
+agents:
+  - name: "Researcher"
+    role: "Finds information"
+  - name: "Writer"
+    role: "Summarizes data"
